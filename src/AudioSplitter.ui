@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AudioSplitterClass</class>
+ <widget class="QMainWindow" name="AudioSplitterClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>664</width>
+    <height>507</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>AudioSplitter</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>642</width>
+          <height>57</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QTextEdit" name="textEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>664</width>
+     <height>18</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="actionScan"/>
+   <addaction name="actionPlay"/>
+   <addaction name="actionStop"/>
+   <addaction name="actionSplit"/>
+   <addaction name="actionTags"/>
+   <addaction name="actionBell"/>
+   <addaction name="actionSettings"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionPlay">
+   <property name="icon">
+    <iconset resource="AudioSplitter.qrc">
+     <normaloff>:/AudioSplitter/res/play.png</normaloff>:/AudioSplitter/res/play.png</iconset>
+   </property>
+   <property name="text">
+    <string>Play</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="icon">
+    <iconset resource="AudioSplitter.qrc">
+     <normaloff>:/AudioSplitter/res/stop.png</normaloff>:/AudioSplitter/res/stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionScan">
+   <property name="icon">
+    <iconset resource="AudioSplitter.qrc">
+     <normaloff>:/AudioSplitter/res/scan.png</normaloff>:/AudioSplitter/res/scan.png</iconset>
+   </property>
+   <property name="text">
+    <string>Scan</string>
+   </property>
+  </action>
+  <action name="actionSplit">
+   <property name="icon">
+    <iconset resource="AudioSplitter.qrc">
+     <normaloff>:/AudioSplitter/res/split.png</normaloff>:/AudioSplitter/res/split.png</iconset>
+   </property>
+   <property name="text">
+    <string>Split</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="AudioSplitter.qrc">
+     <normaloff>:/AudioSplitter/res/open.png</normaloff>:/AudioSplitter/res/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="AudioSplitter.qrc">
+     <normaloff>:/AudioSplitter/res/settings.png</normaloff>:/AudioSplitter/res/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionTags">
+   <property name="icon">
+    <iconset resource="AudioSplitter.qrc">
+     <normaloff>:/AudioSplitter/res/tags.png</normaloff>:/AudioSplitter/res/tags.png</iconset>
+   </property>
+   <property name="text">
+    <string>actionTags</string>
+   </property>
+   <property name="toolTip">
+    <string>Set tags to file name</string>
+   </property>
+  </action>
+  <action name="actionBell">
+   <property name="icon">
+    <iconset resource="AudioSplitter.qrc">
+     <normaloff>:/AudioSplitter/res/bell.png</normaloff>:/AudioSplitter/res/bell.png</iconset>
+   </property>
+   <property name="text">
+    <string>actionBell</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert audio separators</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="AudioSplitter.qrc"/>
+ </resources>
+ <connections/>
+</ui>

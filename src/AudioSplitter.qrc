@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/AudioSplitter">
+        <file>res/play.png</file>
+        <file>res/scan.png</file>
+        <file>res/split.png</file>
+        <file>res/stop.png</file>
+        <file>res/open.png</file>
+        <file>res/settings.png</file>
+        <file>res/bell.png</file>
+        <file>res/tags.png</file>
+    </qresource>
+</RCC>
