@@ -7,16 +7,29 @@ HorizontalBarChart::HorizontalBarChart(QWidget *parent)
 {
 }
 
+void HorizontalBarChart::drawDuration(QPainter *painter, int x, int y, int t)
+{
+	if (t > 3600)
+		painter->drawText(x, y - hdrHeight, 200, hdrHeight, 0,
+			QString::asprintf("%dh %dm %ds", t / 3600, (t % 3600) / 60, t % 60));
+	else
+		painter->drawText(x, y - hdrHeight, 200, hdrHeight, 0,
+			QString::asprintf("%dm %ds", t / 60, t % 60));
+}
+
 void HorizontalBarChart::paintEvent(QPaintEvent* event)
 {
 	QPainter painter(this);
 		
-	int w = width()/2;
+	int w1 = width();
+	int w2 = w1/2;
+	int w4 = w1/4;
 	int h = height();
 	int n = m_values.size();
 
 	// vertical lines
-	painter.drawLine(w, 0, w, h);
+	painter.drawLine(w2, 0, w2, h);
+	painter.drawLine(w2+w4, 0, w2+w4, h);
 
 	// Max widths
 	m_totalWidths[0] = m_totalWidths[1] = 0;
@@ -28,41 +41,58 @@ void HorizontalBarChart::paintEvent(QPaintEvent* event)
 	}
 
 	// Draw bars
+	double d = 0;
 	m_lastY = hdrHeight;
 	p = 0;
 	painter.setPen(Qt::black);
 	for (int i = 0; i < n; i++) {
 		double c = m_values[i].v;
+		double t = c - p;
 		if (i & 1) {
-			// right
-			painter.setBrush(i==m_index ? Qt::red : (m_values[i].st & 1) ? Qt::darkCyan : Qt::cyan);
-			int scaledWidth = (c-p) * w / m_totalWidths[1];
-			painter.drawRect(w, m_lastY, scaledWidth - 1, barHeight - 1);
 			
+			d += t / 2;
+
+			// right (pause)
+			painter.setBrush(i==m_index ? Qt::red : (m_values[i].st & 1) ? Qt::darkCyan : Qt::cyan);
+			int scaledWidth = (c-p) * w4 / m_totalWidths[1];
+			painter.drawRect(w2, m_lastY, scaledWidth - 1, barHeight - 1);
+			
+			// splitter line
 			if (m_values[i].st & 1) {
+				int y = m_lastY + hdrHeight / 2;
 				painter.setPen(Qt::blue);
-				painter.drawLine(w, m_lastY+ hdrHeight/2, w*2, m_lastY + hdrHeight / 2);
+				painter.drawLine(w2, y, w1, m_lastY + hdrHeight / 2);
 				painter.setPen(Qt::yellow);
-				painter.drawLine(w, m_lastY + hdrHeight / 2 - 1, w * 2, m_lastY + hdrHeight / 2 - 1);
-				painter.drawLine(w, m_lastY + hdrHeight / 2 + 1, w * 2, m_lastY + hdrHeight / 2 + 1);
+				painter.drawLine(w2, y - 1, w1, m_lastY + hdrHeight / 2 - 1);
+				painter.drawLine(w2, y + 1, w1, m_lastY + hdrHeight / 2 + 1);
 				painter.setPen(Qt::black);
+
+				// duration
+				drawDuration(&painter, w2 + w4 + 10, y, d);
+				
+				d = t / 2;
 			}
 
 			// next line
 			m_lastY += barHeight;
 		}
 		else {
-			// left
+			d += t;
+
+			// left (sound)
 			painter.setBrush(i == m_index ? Qt::red : Qt::green);
-			int scaledWidth = (c-p) * w / m_totalWidths[0];
+			int scaledWidth = (c-p) * w2 / m_totalWidths[0];
 			painter.drawRect(0, m_lastY, scaledWidth - 1, barHeight - 1);
 		}		
 		p = c;
 	}	
 
+	// end duration
+	drawDuration(&painter, w2 + w4 + 10, h, d);
+	
 	// Draw Widths Info
-	painter.drawText(0, 0, w, hdrHeight, 0, QString::asprintf(" Sounds: Max=%.5f s", m_totalWidths[0]));
-	painter.drawText(w, 0, w, hdrHeight, 0, QString::asprintf(" Pauses: Max=%.5f s", m_totalWidths[1]));
+	painter.drawText(0, 0, w2, hdrHeight, 0, QString::asprintf(" Sounds: Max=%.5f s", m_totalWidths[0]));
+	painter.drawText(w2, 0, w1, hdrHeight, 0, QString::asprintf(" Pauses: Max=%.5f s", m_totalWidths[1]));
 }
 
 void HorizontalBarChart::update()

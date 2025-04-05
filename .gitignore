@@ -1,2 +1,10 @@
 /audiosplitter.ini
 /*.user
+/.vs/AudioSplitter/v15/*.suo
+/.vs/AudioSplitter/v15/*.db
+/Debug/*.exe
+/Debug/*.ilk
+/Debug/*.log
+/Debug/*.obj
+/Debug/AudioSplitter.tlog/*.tlog
+/Debug

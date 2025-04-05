@@ -33,6 +33,7 @@ protected:
 
 private:
 	int getIndexByMouse(QMouseEvent *event);
+	void drawDuration(QPainter *painter, int x, int y, int t);
 private:
 	QVector<Data> m_values;
 
