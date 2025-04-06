@@ -300,18 +300,27 @@ void AudioSplitter::onBell()
 		return;
 	}
 
+	QStringList lst;
 	if (!selectedDirPath.isEmpty()) {
 		QDirIterator it(selectedDirPath, QStringList() << "*.mp3", QDir::Files, QDirIterator::Subdirectories);
-
 		while (it.hasNext()) {
-			QFileInfo fi = it.fileInfo();
-			QString path = fi.absolutePath() + fi.baseName() + "i.mp3";
+			if (it.fileInfo().suffix() == "mp3") {
+				ui.textEdit->append("<font color=blue>file found: " + it.filePath() + "</font>");
+				lst.push_back(it.filePath());
+			}
+			it.next();
+			QCoreApplication::processEvents();
+		}
+
+		for(QString &p : lst) {
+			QFileInfo fi(p);
+			QString path = fi.absoluteDir().filePath(fi.baseName() + "i.mp3");
+			
 			if (QFile::copy(pathBell, path)) 
 				ui.textEdit->append("<font color=blue>file copied: " + path + "</font>");
 			else 
 				ui.textEdit->append("<font color=red>COPY ERROR: " + path + "</font>");
-			QCoreApplication::processEvents();
-			it.next();
+			QCoreApplication::processEvents();			
 		}
 		ui.textEdit->append("<b>Done!</b>");
 	}
