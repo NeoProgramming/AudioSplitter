@@ -8,8 +8,8 @@ class SettingsDlg : public QDialog
 	Q_OBJECT
 
 public:
-	SettingsDlg(const QString& ffmpeg, const QString &ffplay, const QString &output, 
-		const QString &bell, const QString &prefix, int digits, int code, double silence, QWidget *parent = nullptr);
+	SettingsDlg(const QString& ffmpeg, const QString &ffplay, const QString &output, const QString &bell, 
+		bool origname, const QString &prefix, int digits, int code, double silence, QWidget *parent = nullptr);
 	~SettingsDlg();
 public:
 	QString pathFfmpeg;
@@ -20,6 +20,7 @@ public:
 	int numOfDigits;
 	double timeSilence;
 	int codeOutput;
+	bool origName;
 	
 private slots:
 	void onOverviewFfmpeg();

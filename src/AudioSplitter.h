@@ -51,6 +51,7 @@ private:
 	QString pathBell;
 	QString namePrefix;
 	int numOfDigits;
+	bool origName;
 };
 
 // todo:

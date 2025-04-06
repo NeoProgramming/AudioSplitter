@@ -19,7 +19,8 @@ const char pathIni[] = "audiosplitter.ini";
 	ITEM(timeSilence, 3.0)		\
 	ITEM(codeOutput, 0)			\
 	ITEM(namePrefix, "")		\
-	ITEM(numOfDigits, 3)
+	ITEM(numOfDigits, 3)		\
+	ITEM(origName, 0)
 
 AudioSplitter::AudioSplitter(QWidget *parent)
     : QMainWindow(parent)
@@ -106,13 +107,14 @@ void AudioSplitter::onOpen()
 
 void AudioSplitter::onSettings()
 {
-	SettingsDlg dlg(pathFfmpeg, pathFfplay, pathOutput, pathBell, namePrefix, numOfDigits, codeOutput, timeSilence, this);
+	SettingsDlg dlg(pathFfmpeg, pathFfplay, pathOutput, pathBell, origName, namePrefix, numOfDigits, codeOutput, timeSilence, this);
 	
 	if (dlg.exec() == QDialog::Accepted) {
 		pathFfmpeg = dlg.pathFfmpeg;
 		pathFfplay = dlg.pathFfplay;
 		pathOutput = dlg.pathOutput;
 		pathBell = dlg.pathBell;
+		origName = dlg.origName;
 		namePrefix = dlg.namePrefix;
 		numOfDigits = dlg.numOfDigits;
 		codeOutput = dlg.codeOutput;
@@ -238,7 +240,12 @@ void AudioSplitter::onConv()
 		}
 	}
 
-	QString fmt = namePrefix + "%0" + QString::number(numOfDigits) + "d.mp3";
+	QString fmt;
+	if (origName) {
+		QFileInfo fi(pathSource);
+		fmt = fi.baseName();
+	}
+	fmt += namePrefix + "%0" + QString::number(numOfDigits) + "d.mp3";
 
 	args += " -reset_timestamps 1 ";
 	if (codeOutput == 2)

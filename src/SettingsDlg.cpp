@@ -2,12 +2,13 @@
 #include <QFileDialog>
 
 SettingsDlg::SettingsDlg(const QString& ffmpeg, const QString &ffplay, const QString &output, const QString &bell,
-	const QString &prefix, int digits, int code, double silence, QWidget *parent)
+	bool origname, const QString &prefix, int digits, int code, double silence, QWidget *parent)
 	: QDialog(parent)
 	, pathFfmpeg(ffmpeg)
 	, pathFfplay(ffplay)
 	, pathOutput(output)
 	, pathBell(bell)
+	, origName(origname)
 	, namePrefix(prefix)
 	, numOfDigits(digits)
 	, codeOutput(code)
@@ -23,6 +24,7 @@ SettingsDlg::SettingsDlg(const QString& ffmpeg, const QString &ffplay, const QSt
 	ui.comboDigits->setCurrentIndex(numOfDigits-1);
 	ui.comboOutput->setCurrentIndex(codeOutput);
 	ui.lineSilence->setText(QString::number(timeSilence));
+	ui.checkOrigName->setChecked(origName);
 	
 	connect(ui.pushFfmpeg, &QPushButton::clicked, this, &SettingsDlg::onOverviewFfmpeg);
 	connect(ui.pushFfplay, &QPushButton::clicked, this, &SettingsDlg::onOverviewFfplay);
@@ -81,6 +83,7 @@ void SettingsDlg::onOk()
 	numOfDigits = ui.comboDigits->currentIndex() + 1;
 	codeOutput = ui.comboOutput->currentIndex();
 	timeSilence = ui.lineSilence->text().toDouble();
+	origName = ui.checkOrigName->isChecked();
 
 	accept();
 }

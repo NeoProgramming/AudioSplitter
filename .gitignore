@@ -8,3 +8,8 @@
 /Debug/*.obj
 /Debug/AudioSplitter.tlog/*.tlog
 /Debug
+/.vs/AudioSplitter/v15/ipch/AutoPCH/4a9319ccca396a86/*.ipch
+*.ipch
+*.tlog
+*.obj
+Release
